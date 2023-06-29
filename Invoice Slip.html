@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <title>Invoice Slip</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        
+
+        <style>
+            body{
+                background-color: rgb(18, 48, 38);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+            label,
+            td,
+            th {
+                color: beige;
+            }
+
+            #tablehead{
+                background-color: rgb(214, 195, 87);
+                color: black;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+        <form class="w-50 mx-auto mt-5 mb-5">
+            <div class="form-group">
+                <label for="FormGroupExampleInput">Product Id</label>
+                <input type="" class="form-control" id="ids" />
+            </div>
+            <div class="form-group">
+                <label for="FormGroupExampleInput">Product Name</label>
+                <input type="" class="form-control" id="product" />
+            </div>
+            <div class="form-group">
+                <label for="FormGroupExampleInput">Price</label>
+                <input type="number" class="form-control" id="prc" />
+            </div>
+            <div class="form-group">
+                <label for="FormGroupExampleInput">Quantity</label>
+                <input type="number" class="form-control" id="qty" onchange="calculate()"/>
+            </div>
+            <div class="form-group">
+                <label for="FormGroupExampleInput">Amount</label>
+                <input type="number" class="form-control" id="amnt" disabled />
+            </div>
+            <button type="button" class="btn btn-dark mt-2" onclick="addData()" >Add</button>
+        </form>
+        <hr/>
+    
+        <table bgcolor="orange" width="100%">
+            <tr>
+                <td>
+                    <h1>
+                        <font color="white">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INVOICE</font>
+                    </h1>
+                </td>
+                <td width="100"></td>
+                <td>
+                    <font color="white">+234 90 9155 9707, +234 80 7110 4642<br>
+                    preciousonyechere3@gmail.com <br>
+                    ponyechere3@gmail.com</font>
+                </td>
+                <td>
+                    <font color="white"> Precious Nzubechukwu Onyechere<br>
+                        Gbagada, Lagos Nigeria. <br>
+                        10020
+                    </font>
+                </td>
+            </tr>
+        </table>
+        <br><br>
+    
+        <table>
+            <tr>
+                <td width="5%"> </td>
+                <td width="500">Billed To:</td>
+                <td width="200">&nbsp;&nbsp;&nbsp;Invoice Number </td>
+                <td width="200">&nbsp;&nbsp;&nbsp;</td>
+                <td width="200">Invoice Total</td>
+            </tr>
+            <tr>
+                <td width="5%"> </td>
+                <td width="500">Client Number</td>
+                <td width="200">&nbsp;&nbsp;&nbsp; 0123456789</td>
+                <td width="200"></td>
+                <td width="200" id="total-amount"><b>
+                    </b></td>
+            </tr>
+            <tr>
+                <td width="5%"> </td>
+                <td width="500">Client Address</td>
+                <td width="200">&nbsp;&nbsp;&nbsp; </td>
+                <td width="200">&nbsp;&nbsp;&nbsp;</td>
+                <td width="200">&nbsp;&nbsp;&nbsp; </td>
+            </tr>
+            <tr>
+                <td width="5%"> </td>
+                <td width="500">City, State Country</td>
+                <td width="200">&nbsp;&nbsp;&nbsp;Date of Issue</td>
+                <td width="200">&nbsp;&nbsp;&nbsp;</td>
+                <td width="200">&nbsp;&nbsp;&nbsp; </td>
+            </tr>
+            <tr>
+                <td width="5%"> </td>
+                <td width="500">Zip Code</td>
+                <td width="200">&nbsp;&nbsp;&nbsp; 20/01/23</td>
+                <td width="200">&nbsp;&nbsp;&nbsp;</td>
+                <td width="200">&nbsp;&nbsp;&nbsp;</td>
+            </tr>
+        </table>
+        <!-- lines -->
+        <hr />
+        <table class="table">
+            <thead id="tablehead">
+                <tr>
+                    <th id="ids">Id</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="newtr">
+    
+            </tbody>
+        </table>
+        <hr>
+        <table class="table">
+            <tr>
+                <th width="20%"></th>
+                <th width="20%"> </th>
+                <th width="20%"></th>
+                <th width="20% "> Subtotal:</th>
+                <th width="20%" id="subtotal-amount"></th>
+            </tr>
+            <tr>
+                <th width="20%"></th>
+                <th width="20%"></th>
+                <th width="20%"></th>
+                <th width="20%"> Tax: </th>
+                <th width="20%">&#8358 800</th>
+            </tr>
+            <tr>
+                <th width="20%"></th>
+                <th width="20%"></th>
+                <th width="20%"></th>
+                <th width="20%"> Total Amount(&#8358)</th>
+                <th width="20%" id="total"></th>
+            </tr>
+        </table>
+
+        <script>
+            var price;
+            var quantity;
+            var amount;
+            var prod_name;
+            var ids;    
+            var tax = 800;
+
+
+            function calculate() {
+                ids = document.getElementById("ids").value;
+                price = document.getElementById("prc").value;
+                quantity = document.getElementById("qty").value;
+                amount = price * quantity;
+                document.getElementById("amnt").value = amount;
+            }
+
+            function addData() {
+                prod_name = document.getElementById("product").value;
+                document.getElementById('newtr').innerHTML += '<tr><td>' + ids + '</td><td>' + prod_name + '</td><td>' 
+                + price + '</td> <td>' + quantity + '</td><td>' + amount + '</td></tr>'
+                document.getElementById("ids").value = "";
+                document.getElementById("product").value = "";
+                document.getElementById("prc").value = "";
+                document.getElementById("qty").value = "";
+                document.getElementById("amnt").value = "";
+                document.getElementById("subtotal-amount").innerHTML = price * quantity;
+                document.getElementById("total-amount").innerHTML = price * quantity;
+                document.getElementById("total").innerHTML = price * quantity + tax;
+            }
+
+            
+        </script>
+
+    </body>
+ 
+
+</html>
